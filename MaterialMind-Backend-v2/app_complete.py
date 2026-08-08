@@ -208,42 +208,46 @@ class GeminiService:
                 f"Cost {m.get('cost', 'N/A')}"
                 for m in candidates[:10]
             ])
+prompt = f"""
+You are a senior materials engineer writing a recommendation memo for a colleague. Write in natural, complete sentences, the way an experienced engineer would explain their reasoning out loud, not as a spec-sheet dump of fragments.
 
-            prompt = f"""
-            You are a senior materials engineer advising another engineer. Based on these requirements:
+Requirements:
+Application: {requirements.get('application', 'Not specified')}
+Required Properties: {requirements.get('requirements', 'Not specified')}
+Budget: {requirements.get('budget', 'Not specified')}
+Sustainability Priority: {requirements.get('sustainability_priority', False)}
 
-            Application: {requirements.get('application', 'Not specified')}
-            Required Properties: {requirements.get('requirements', 'Not specified')}
-            Budget: {requirements.get('budget', 'Not specified')}
-            Sustainability Priority: {requirements.get('sustainability_priority', False)}
+Verified candidate materials from our database:
+{candidates_text}
 
-            Verified candidate materials from our database:
-            {candidates_text}
+Write a comparative recommendation with these sections, using ## headers:
 
-            Provide a comparative recommendation covering:
-            1. Top pick with justification, AND at least one real weakness of that pick
-            2. Runner-up alternative and when you would choose it instead
-            3. Key trade-offs between the top candidates
-            4. Manufacturing considerations
-            5. Sustainability impact
-            6. Final recommendation with clear reasoning
+## Top Pick
+Name the material and explain in 2-3 full sentences why it fits. Then explicitly state one real weakness or limitation, a genuine trade-off an engineer would need to plan around.
 
-            Never present a single option as a clear winner without trade-offs. Use clear sections with bullet points.
-            """
+## Runner-Up
+Name the alternative and explain in 2-3 sentences when you'd choose it instead of the top pick.
 
-            response = self.model.generate_content(prompt)
-            return response.text
+## Key Trade-offs
+A short paragraph, not a bullet list, comparing the top candidates directly on the properties that matter most for this application.
 
-        except Exception as e:
-            print(f"Gemini error: {e}")
-            return self._fallback_recommendation(requirements, candidates)
+## Manufacturing Considerations
+1-2 sentences on how each would actually be produced and any practical constraints.
 
-    def get_open_recommendation(self, requirements: Dict) -> str:
-        if not self.available or not self.model:
-            return "No matching materials in our verified database, and AI is currently unavailable to suggest alternatives."
+## Sustainability Impact
+1-2 sentences, be honest if a material has a poor sustainability profile rather than glossing over it.
 
-        try:
-            prompt = f"""
+## Bottom Line
+A short closing paragraph giving your actual recommendation as if advising a colleague directly, referencing the specific numbers or constraints that drove the decision.
+
+Writing rules:
+- Use full grammatically correct sentences throughout, not sentence fragments.
+- Do not use identical sentence structure across sections. Vary your phrasing.
+- Avoid bullet points except where genuinely listing 3+ discrete items.
+- Never present the top pick as a flawless winner. Every material has a real limitation, name it directly.
+- Keep the whole response under 400 words.
+"""
+        
             You are a senior materials engineer. No material in our internal verified database matched this application:
 
             Application: {requirements.get('application', 'Not specified')}
