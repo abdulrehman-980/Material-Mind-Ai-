@@ -20,16 +20,16 @@
 
 ## The Problem
 
-Choosing the right engineering material is one of the most consequential — and most error-prone — decisions in product design. Students and early-career engineers often default to familiar materials out of habit rather than fit, while trade-off data (strength, weight, cost, manufacturability, sustainability) is scattered across datasheets, standards, and institutional knowledge that isn't easy to search or compare.
+Choosing the right engineering material is one of the most consequential and most error-prone decisions in product design. Students and early-career engineers often default to familiar materials out of habit rather than fit, while trade-off data (strength, weight, cost, manufacturability, sustainability) is scattered across datasheets, standards, and institutional knowledge that isn't easy to search or compare.
 
 ## The Solution
 
-**MaterialMind AI** is a conversational material selection copilot. You describe your application's real constraints — temperature, environment, strength, weight priority, budget, quantity — and MaterialMind recommends a material with reasoning you can actually verify:
+**MaterialMind AI** is a conversational material selection copilot. You describe your application's real constraints temperature, environment, strength, weight priority, budget, quantity  and MaterialMind recommends a material with reasoning you can actually verify:
 
 - ✅ **Verified database answers** are pulled from a hand-curated set of **72 engineering materials** with real, checkable numbers.
-- 🤖 **AI-estimated answers**, used only when nothing in the database fits, are clearly labeled **"AI ESTIMATE — verify before use"** so you're never misled into treating a guess as a fact.
+- 🤖 **AI-estimated answers**, used only when nothing in the database fits, are clearly labeled **"AI ESTIMATE verify before use"** so you're never misled into treating a guess as a fact.
 
-Every recommendation is framed as a genuine trade-off, not a false "best" answer: top pick with an honest weakness, a runner-up, manufacturing considerations, and sustainability notes — the way a senior materials engineer would actually explain a decision.
+Every recommendation is framed as a genuine trade-off, not a false "best" answer: top pick with an honest weakness, a runner-up, manufacturing considerations, and sustainability notes the way a senior materials engineer would actually explain a decision.
 
 ## Demo
 
@@ -163,7 +163,7 @@ Frontend runs at `http://localhost:5173`.
 
 ## License
 
-This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License  see the [LICENSE](LICENSE) file for details.
 
 ---
 
