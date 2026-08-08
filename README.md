@@ -1,18 +1,74 @@
-# MaterialMind AI
+<div align="center">
 
-**AI-powered engineering material selection assistant — built for the Gemini XPrice Hackathon (Devpost)**
+# 🧪 MaterialMind AI
 
-MaterialMind helps engineers and students choose the right material for a given application. Answer a short guided wizard (application, temperature, environment, strength requirement, weight priority, budget, and quantity), and the system recommends materials either from a verified 72-material database or, when nothing in the database matches, from Gemini's general knowledge — clearly labeled as an AI estimate so you always know how trustworthy a recommendation is.
+**An AI-powered engineering copilot for material selection**
 
-## Features
+*Built for the Gemini XPrice Hackathon — Devpost*
 
-- **Guided recommendation wizard** — step-by-step material selection based on real engineering constraints
-- **Verified database + AI fallback** — 72 hand-verified materials, with a Gemini-powered estimate (clearly labeled) when nothing matches
-- **Material comparison** — side-by-side comparison of candidate materials
-- **Manufacturing process advisor** — suggests suitable manufacturing processes for the recommended material
-- **PDF report generation** — downloadable engineering report summarizing the recommendation and reasoning
-- **Browse & search** — explore the full verified material database directly
-- **Database stats** — overview of the dataset
+[![React](https://img.shields.io/badge/Frontend-React%20%2B%20Vite-61DAFB?logo=react&logoColor=white)](https://react.dev/)
+[![Tailwind](https://img.shields.io/badge/Styling-TailwindCSS-38B2AC?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+[![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![Gemini](https://img.shields.io/badge/AI-Google%20Gemini-4285F4?logo=googlegemini&logoColor=white)](https://ai.google.dev/)
+[![License](https://img.shields.io/badge/License-MIT-lightgrey)](#license)
+
+[Demo Video](#) · [Live Demo](#) · [Report a Bug](../../issues)
+
+</div>
+
+---
+
+## The Problem
+
+Choosing the right engineering material is one of the most consequential — and most error-prone — decisions in product design. Students and early-career engineers often default to familiar materials out of habit rather than fit, while trade-off data (strength, weight, cost, manufacturability, sustainability) is scattered across datasheets, standards, and institutional knowledge that isn't easy to search or compare.
+
+## The Solution
+
+**MaterialMind AI** is a conversational material selection copilot. You describe your application's real constraints — temperature, environment, strength, weight priority, budget, quantity — and MaterialMind recommends a material with reasoning you can actually verify:
+
+- ✅ **Verified database answers** are pulled from a hand-curated set of **72 engineering materials** with real, checkable numbers.
+- 🤖 **AI-estimated answers**, used only when nothing in the database fits, are clearly labeled **"AI ESTIMATE — verify before use"** so you're never misled into treating a guess as a fact.
+
+Every recommendation is framed as a genuine trade-off, not a false "best" answer: top pick with an honest weakness, a runner-up, manufacturing considerations, and sustainability notes — the way a senior materials engineer would actually explain a decision.
+
+## Demo
+
+> 🎥 *Add your Devpost demo video link here*
+
+> 🖼️ *Add 2–3 screenshots here: the wizard, a recommendation result, and the comparison view*
+
+## Key Features
+
+| Feature | Description |
+|---|---|
+| 🧭 **Guided Wizard** | Step-by-step material selection based on real application constraints |
+| 📚 **Verified Database + AI Fallback** | 72 verified materials, with transparent Gemini-powered estimates when nothing matches |
+| ⚖️ **Material Comparison** | Side-by-side comparison of candidate materials |
+| 🏭 **Manufacturing Advisor** | Suggests suitable manufacturing processes for the chosen material |
+| 📄 **PDF Report Generation** | Downloadable engineering report summarizing the recommendation and reasoning |
+| 🔍 **Browse & Search** | Explore the full verified material database directly |
+| 📊 **Database Stats** | Quick overview of dataset coverage |
+
+## How It Works
+
+```
+User answers wizard (application, temp, environment, strength, weight, budget, qty)
+                │
+                ▼
+   Backend checks the 72-material verified database for a match
+                │
+        ┌───────┴────────┐
+        ▼                ▼
+   Match found      No match found
+        │                │
+        ▼                ▼
+  Verified answer   Gemini generates a labeled
+  with real data    AI estimate (trade-offs,
+                     manufacturing, sustainability)
+                │
+                ▼
+     Result shown in UI + optional PDF report
+```
 
 ## Tech Stack
 
@@ -22,22 +78,27 @@ MaterialMind helps engineers and students choose the right material for a given 
 | Backend | Python + FastAPI + Uvicorn |
 | AI | Google Gemini API (`google-generativeai`, model `gemini-flash-latest`) |
 | Data | `materials.csv` — 72 verified engineering materials |
-| PDF generation | ReportLab |
+| PDF Generation | ReportLab |
 
 ## Project Structure
 
 ```
 Material-Mind-Ai/
 ├── materialmind-frontend/     # React + Vite + Tailwind frontend
+│   └── src/
+│       ├── components/        # Wizard, Recommendations, Comparison, Manufacturing, etc.
+│       └── api.js             # Backend API client
 └── MaterialMind-Backend-v2/   # FastAPI backend + Gemini integration
+    ├── app_complete.py        # Main API application
+    └── materials.csv          # Verified material database
 ```
 
 ## Getting Started
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/) (for the frontend)
-- [Python 3.x](https://www.python.org/) (for the backend)
+- [Node.js](https://nodejs.org/) 18+
+- [Python](https://www.python.org/) 3.10+
 - A Google Gemini API key ([Google AI Studio](https://aistudio.google.com/))
 
 ### 1. Clone the repo
@@ -73,7 +134,7 @@ Run the backend:
 python app_complete.py
 ```
 
-The backend runs at `http://localhost:8080`.
+Backend runs at `http://localhost:8080`.
 
 ### 3. Frontend setup
 
@@ -85,15 +146,35 @@ npm install
 npm run dev
 ```
 
-The frontend runs at `http://localhost:5173`.
+Frontend runs at `http://localhost:5173`.
 
-> **Note:** Both the frontend and backend servers need to be running at the same time, in separate terminal windows, for the app to work.
+> **Note:** Both servers must be running simultaneously, in separate terminal windows, for the app to function.
+
+## Roadmap
+
+- [ ] Open-ended "Ask MaterialMind anything" chat mode, beyond the guided wizard
+- [ ] Expert mode — compact all-fields form for experienced engineers who want to skip the step-by-step wizard
+- [ ] Industry presets (aerospace, automotive, civil, biomedical, marine, electronics) with sensible defaults
+- [ ] Metric ⇄ Imperial unit toggle
+- [ ] Cloud deployment (Vercel + Render)
 
 ## Team
 
-- **Frontend, integration & testing:** [Abdul](https://github.com/abdulrehman-980)
-- **Backend & material database:** NoHesiFactorial
+| Role | Contributor |
+|---|---|
+| Frontend, Integration & Testing | [Abdul](https://github.com/abdulrehman-980) |
+| Backend & Material Database | NoHesiFactorial |
 
-## Hackathon
+## Built For
 
-Built for the **Gemini XPrice Hackathon** on Devpost.
+**Gemini XPrice Hackathon** — [Devpost](https://devpost.com/)
+
+## License
+
+This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
+
+---
+
+<div align="center">
+<sub>Made with care for engineers who'd rather trust real data than guesswork.</sub>
+</div>
