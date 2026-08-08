@@ -150,14 +150,6 @@ Frontend runs at `http://localhost:5173`.
 
 > **Note:** Both servers must be running simultaneously, in separate terminal windows, for the app to function.
 
-## Roadmap
-
-- [ ] Open-ended "Ask MaterialMind anything" chat mode, beyond the guided wizard
-- [ ] Expert mode — compact all-fields form for experienced engineers who want to skip the step-by-step wizard
-- [ ] Industry presets (aerospace, automotive, civil, biomedical, marine, electronics) with sensible defaults
-- [ ] Metric ⇄ Imperial unit toggle
-- [ ] Cloud deployment (Vercel + Render)
-
 ## Team
 
 | Role | Contributor |
