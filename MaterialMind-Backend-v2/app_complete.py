@@ -472,6 +472,39 @@ Write in full sentences suitable for an engineering guide, not fragments. Keep i
 
         return "\n".join(lines)
 
+    def estimate_missing_properties(
+        self, material: Dict[str, Any], missing_keys: List[str]
+    ) -> Dict[str, str]:
+        """Ask Gemini for a best-effort estimate of properties absent from the
+        verified database. Every returned value is tagged '(AI est.)' so it can
+        never be mistaken for a verified database figure downstream."""
+        if not self.available or not self.model or not missing_keys:
+            return {}
+
+        keys_text = ", ".join(missing_keys)
+        prompt = f"""You are a senior materials engineer. For the material below, give your best professional estimate for ONLY these properties: {keys_text}
+
+Material: {material.get('material_name')} ({material.get('category', 'N/A')})
+Known properties: density {material.get('density_g_cm3', 'N/A')} g/cm3, tensile strength {material.get('tensile_strength_mpa', 'N/A')} MPa, cost {material.get('cost', 'N/A')}
+
+Respond with ONLY a valid JSON object mapping each property name to a short value (a qualitative rating like "Good", "Fair", or "Excellent" for qualitative properties, or a number with units for quantitative ones). No explanation, no markdown formatting, no code fences, just the raw JSON object. Example: {{"weldability": "Good", "machinability": "Fair"}}"""
+
+        try:
+            response = self.model.generate_content(prompt)
+            text = response.text.strip()
+
+            if text.startswith("```"):
+                text = text.strip("`")
+                if "\n" in text:
+                    first_line, rest = text.split("\n", 1)
+                    text = rest if first_line.strip().lower() in ("json", "") else text
+
+            estimates = json.loads(text)
+            return {k: f"{v} (AI est.)" for k, v in estimates.items() if k in missing_keys}
+        except Exception:
+            logger.exception("Gemini property estimation failed for '%s'.", material.get("material_name"))
+            return {}
+
     def compare_materials(self, materials: List[Dict[str, Any]]) -> str:
         if not self.available or not self.model:
             return "AI analysis unavailable (Gemini not configured). Showing verified database properties only."
@@ -627,6 +660,36 @@ class PDFReportGenerator:
 
 
 # --------------------------------------------------------------------------
+# Shared enrichment helper
+# --------------------------------------------------------------------------
+
+def _is_missing(value: Any) -> bool:
+    return value is None or value == "N/A" or value == "" or (isinstance(value, float) and pd.isna(value))
+
+
+def enrich_materials_with_estimates(
+    materials: List[Dict[str, Any]],
+    property_keys: List[str],
+    gemini_service: "GeminiService",
+) -> List[Dict[str, Any]]:
+    """Return copies of the given materials with any missing property_keys
+    filled in via Gemini estimates. Verified values already present are never
+    overwritten. Materials are left unmodified if Gemini is unavailable."""
+    enriched = []
+    for material in materials:
+        material_copy = dict(material)
+        missing_keys = [k for k in property_keys if _is_missing(material_copy.get(k))]
+
+        if missing_keys:
+            estimates = gemini_service.estimate_missing_properties(material_copy, missing_keys)
+            material_copy.update(estimates)
+
+        enriched.append(material_copy)
+
+    return enriched
+
+
+# --------------------------------------------------------------------------
 # FastAPI application
 # --------------------------------------------------------------------------
 
@@ -761,7 +824,13 @@ async def compare_materials(request: MaterialComparison):
         "cost",
         "advantages",
         "limitations",
+        "corrosion_resistance",
+        "weldability",
+        "machinability",
     ]
+
+    if GEMINI_AVAILABLE:
+        materials = enrich_materials_with_estimates(materials, properties, gemini)
 
     comparison_table = []
     for prop in properties:
@@ -800,6 +869,10 @@ async def generate_report(request: PDFReportRequest):
 
     if len(materials) < 2:
         raise HTTPException(status_code=400, detail="Need at least 2 materials to generate report")
+
+    if GEMINI_AVAILABLE:
+        pdf_property_keys = [key for _, key in PDF_PROPERTIES]
+        materials = enrich_materials_with_estimates(materials, pdf_property_keys, gemini)
 
     if request.include_gemini_analysis and GEMINI_AVAILABLE:
         gemini_analysis = gemini.compare_materials(materials)
