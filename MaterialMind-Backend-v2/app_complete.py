@@ -378,8 +378,8 @@ Writing rules:
             3. Manufacturing and cost implications
             4. A final recommendation with reasoning
 
-            Keep it concise and professional, suitable for an engineering report. Plain text, no markdown symbols.
-            """
+            Keep it concise and professional, suitable for an engineering report. Plain text, no markdown symbols."""
+            
 
             response = self.model.generate_content(prompt)
             return response.text
