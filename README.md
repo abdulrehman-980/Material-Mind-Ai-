@@ -4,7 +4,7 @@
 
 **An AI-powered engineering copilot for material selection**
 
-*Built for the Gemini XPrice Hackathon — Devpost*
+*Built for the Reverie Hacks 2026  — Devpost*
 
 [![React](https://img.shields.io/badge/Frontend-React%20%2B%20Vite-61DAFB?logo=react&logoColor=white)](https://react.dev/)
 [![Tailwind](https://img.shields.io/badge/Styling-TailwindCSS-38B2AC?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
@@ -159,7 +159,7 @@ Frontend runs at `http://localhost:5173`.
 
 ## Built For
 
-**Gemini XPrice Hackathon** — [Devpost](https://devpost.com/)
+**Reverie Hacks 2026** — [Devpost](https://devpost.com/)
 
 ## License
 
