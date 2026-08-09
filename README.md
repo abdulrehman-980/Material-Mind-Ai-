@@ -35,7 +35,11 @@ Every recommendation is framed as a genuine trade-off, not a false "best" answer
 
 > 🎥 *Add your Devpost demo video link here*
 
-> 🖼️ *Add 2–3 screenshots here: the wizard, a recommendation result, and the comparison view*
+> 🖼️ *Here's screenshots: the wizard, a recommendation result, and the comparison view*
+> <img width="1210" height="571" alt="Screenshot 2026-08-09 135333" src="https://github.com/user-attachments/assets/f2ae461d-aead-424a-8a6d-0f4024d46231" />
+<img width="1225" height="630" alt="Screenshot 2026-08-09 140420" src="https://github.com/user-attachments/assets/9cb2ea5d-7d71-441d-8ca7-5e09fab48acb" />
+
+> <img width="1056" height="629" alt="Screenshot 2026-08-09 141658" src="https://github.com/user-attachments/assets/33dcb410-cd68-4f89-bc7e-10ae3435c6be" />
 
 ## Key Features
 
