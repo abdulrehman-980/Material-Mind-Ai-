@@ -33,7 +33,6 @@ Every recommendation is framed as a genuine trade-off, not a false "best" answer
 
 ## Demo
 
-> 🎥 *Add your Devpost demo video link here*
 
 > 🖼️ *Here's screenshots: the wizard, a recommendation result, and the comparison view*
 > <img width="1210" height="571" alt="Screenshot 2026-08-09 135333" src="https://github.com/user-attachments/assets/f2ae461d-aead-424a-8a6d-0f4024d46231" />
