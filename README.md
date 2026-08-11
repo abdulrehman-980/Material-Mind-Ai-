@@ -159,7 +159,7 @@ Frontend runs at `http://localhost:5173`.
 | Role | Contributor |
 |---|---|
 | Frontend, Integration & Testing | [Abdul](https://github.com/abdulrehman-980) |
-| Backend & Material Database | NoHesiFactorial |
+| Backend & Material Database | [Aryaan Singh Chhetri](https://github.com/Python-Bad) |
 
 ## Built For
 
