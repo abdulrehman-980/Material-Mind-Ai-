@@ -12,7 +12,7 @@
 [![Gemini](https://img.shields.io/badge/AI-Google%20Gemini-4285F4?logo=googlegemini&logoColor=white)](https://ai.google.dev/)
 [![License](https://img.shields.io/badge/License-MIT-lightgrey)](#license)
 
-[Demo Video](#) · [Live Demo](#) · [Report a Bug](../../issues)
+ · [Report a Bug](../../issues)
 
 </div>
 
